@@ -34,8 +34,8 @@ if st.button('Submit Order'):
     if ingredients_list and name_on_order:
         ingredients_string = ' '.join(ingredients_list)
         my_insert_stmt = f"""
-            INSERT INTO smoothies.public.orders (ingredients, name_on_order)
-            VALUES ('{ingredients_string}', '{name_on_order}')
+            INSERT INTO smoothies.public.orders (ingredients, name_on_order, order_filled)
+            VALUES ('{ingredients_string}', '{name_on_order}', 0)
         """
         session.sql(my_insert_stmt).collect()
         st.success(f"Your Smoothie is ordered! {name_on_order}", icon="✅")
