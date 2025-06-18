@@ -38,17 +38,17 @@ ingredients_list = st.multiselect(
 #         st.warning("Please enter a name and select at least one ingredient.")
 
 if ingredients_list:
+    # Create a single string of ingredients for later use
     ingredients_string = ' '.join(ingredients_list)
 
+    # Loop through each selected fruit
     for fruit_chosen in ingredients_list:
-        # Dynamically fetch data for each selected fruit
         fruit_name = fruit_chosen.lower()
         response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{fruit_name}")
-        
+
         if response.status_code == 200:
             fruit_data = response.json()
-            st.subheader(f"Nutrition Info for {fruit_chosen}")
+            st.subheader(f"{fruit_chosen} Nutrition Information")
             st.dataframe(data=fruit_data, use_container_width=True)
         else:
             st.warning(f"Could not fetch data for {fruit_chosen}")
-
