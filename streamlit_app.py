@@ -29,6 +29,20 @@ ingredients_list = st.multiselect(
     max_selections=5
 )
 
+# Submit button
+if st.button('Submit Order'):
+    if ingredients_list and name_on_order:
+        ingredients_string = ' '.join(ingredients_list)
+        my_insert_stmt = f"""
+            INSERT INTO smoothies.public.orders (ingredients, name_on_order)
+            VALUES ('{ingredients_string}', '{name_on_order}')
+        """
+        session.sql(my_insert_stmt).collect()
+        st.success(f"Your Smoothie is ordered! {name_on_order}", icon="✅")
+    else:
+        st.warning("Please enter a name and select at least one ingredient.")
+
+
 if ingredients_list:
     ingredients_string = ' '.join(ingredients_list)
 
